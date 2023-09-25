@@ -30,6 +30,7 @@
 		12629E402ABEFCC40056D007 /* ThemeFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12629E3F2ABEFCC40056D007 /* ThemeFont.swift */; };
 		12629E432ABEFD400056D007 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12629E422ABEFD400056D007 /* UIColor+Extension.swift */; };
 		12B46D182ABF544700A61184 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B46D172ABF544700A61184 /* UIView+Extension.swift */; };
+		12B46D1A2ABF5F3B00A61184 /* AmountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B46D192ABF5F3B00A61184 /* AmountView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		12629E422ABEFD400056D007 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		12629E442ABF046F0056D007 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		12B46D172ABF544700A61184 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		12B46D192ABF5F3B00A61184 /* AmountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				12629E362ABEF7600056D007 /* BillInputView.swift */,
 				12629E382ABEF7750056D007 /* TipInputView.swift */,
 				12629E3A2ABEF78D0056D007 /* SplitInputView.swift */,
+				12B46D192ABF5F3B00A61184 /* AmountView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -352,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				12B46D1A2ABF5F3B00A61184 /* AmountView.swift in Sources */,
 				12629DF82ABEE99F0056D007 /* CalculatorVC.swift in Sources */,
 				12B46D182ABF544700A61184 /* UIView+Extension.swift in Sources */,
 				12629E332ABEF4CA0056D007 /* LogoView.swift in Sources */,

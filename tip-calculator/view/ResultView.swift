@@ -8,7 +8,7 @@
 import UIKit
 
 class ResultView: UIView {
-    
+    //MARK: - ResultView UI Object
     private let headerLabel: UILabel = {
         LabelFactory.build(text: "Toplam/Kişi", font: ThemeFont.demibold(ofSize: 18))
     }()
@@ -45,17 +45,17 @@ class ResultView: UIView {
     
     private lazy var hStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [
-            AmountView(),
+            AmountView(title: "Top. fatura", textAlignment: .left),
             UIView(),
-            AmountView(),
+            AmountView(title: "Bahşiş mik.", textAlignment: .right),
         ])
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         return stackView
     }()
+
     
-    
-    
+  //MARK: - Initialization
     init() {
         super.init(frame: .zero)  // Otomatik düzeni kaldırmak için zero kullandık
         layout()
@@ -86,22 +86,5 @@ class ResultView: UIView {
         let view = UIView()
         view.heightAnchor.constraint(equalToConstant: height).isActive = true
         return view
-    }
-    
-}
-
-
-class AmountView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        layout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func layout() {
-        backgroundColor = .red
     }
 }
