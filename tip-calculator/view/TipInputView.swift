@@ -77,7 +77,6 @@ class TipInputView: UIView {
         buttonVStackView.snp.makeConstraints { make in
             make.top.bottom.trailing.equalToSuperview()
         }
-        
         headerView.snp.makeConstraints { make in
             make.leading.equalToSuperview()
             make.trailing.equalTo(buttonVStackView.snp.leading).offset(-24)
@@ -103,4 +102,3 @@ class TipInputView: UIView {
         return button
     }
 }
-

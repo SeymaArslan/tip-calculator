@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class CalculatorVC: UIViewController {
-
     private let logoView = LogoView()
     private let resultView = ResultView()
     private let billInputView = BillInputView()
@@ -32,7 +31,6 @@ class CalculatorVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         layout()
     }
 
@@ -46,7 +44,6 @@ class CalculatorVC: UIViewController {
             make.bottom.equalTo(view.snp.bottomMargin).offset(-16)
             make.top.equalTo(view.snp.topMargin).offset(16)
         }
-        
         // rakamları ayırıp yazma sebebimiz görünümün bir kutu + boşluk + bir kutu olması
         logoView.snp.makeConstraints { make in
             make.height.equalTo(48)
@@ -68,6 +65,4 @@ class CalculatorVC: UIViewController {
             make.height.equalTo(56)
         }
     }
-
 }
-
