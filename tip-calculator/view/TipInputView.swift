@@ -3,9 +3,11 @@
 //  tip-calculator
 //
 //  Created by Seyma on 23.09.2023.
-//
+// 15
 
 import UIKit
+import Combine
+import CombineCocoa
 
 class TipInputView: UIView {
     
@@ -17,16 +19,28 @@ class TipInputView: UIView {
     
     private lazy var tenPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .tenPercent)
+        button.tapPublisher.flatMap({
+            Just(Tip.tenPercent)
+        }).assign(to: \.value, on: tipSubject)
+            .store(in: &cancellables)
         return button
     }()
     
     private lazy var fifteenPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .fiftenPercent)
+        button.tapPublisher.flatMap ({
+            Just(Tip.fiftenPercent)
+        }).assign(to: \.value, on: tipSubject)
+            .store(in: &cancellables)
         return button
     }()
     
     private lazy var twentyPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .twentyPercent)
+        button.tapPublisher.flatMap({
+            Just(Tip.twentyPercent)
+        }).assign(to: \.value, on: tipSubject)
+            .store(in: &cancellables)
         return button
     }()
     
@@ -37,6 +51,9 @@ class TipInputView: UIView {
         button.backgroundColor = ThemeColor.primary
         button.tintColor = .white
         button.addCornerRadius(radius: 8.0)
+        button.tapPublisher.sink { [weak self] _ in
+            self?.handleCustomTipButton()
+        }.store(in: &cancellables)
         return button
     }()
     
@@ -63,9 +80,17 @@ class TipInputView: UIView {
         return stackView
     }()
     
+    private let tipSubject = CurrentValueSubject<Tip, Never>(.none)
+    var valuePublisher: AnyPublisher<Tip, Never> {
+        return tipSubject.eraseToAnyPublisher()
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     init() {
         super.init(frame: .zero)  // Otomatik düzeni kaldırmak için zero kullandık
         layout()
+        print("tip : \(tipSubject.value)")
     }
     
     required init?(coder: NSCoder) {
@@ -83,6 +108,29 @@ class TipInputView: UIView {
             make.width.equalTo(68)
             make.centerY.equalTo(buttonHStackView.snp.centerY)
         }
+    }
+    
+    private func handleCustomTipButton() {
+        let alertController: UIAlertController = {
+            let controller = UIAlertController(
+                title: "Özel bahşiş oranı girin",
+                message: nil,
+                preferredStyle: .alert)
+            controller.addTextField{ textField in
+                textField.placeholder = "Cömert olabiliriz"
+                textField.keyboardType = .numberPad
+                textField.autocorrectionType = .no // otomatik düzeltme kapalı
+            }
+            let cancelAction = UIAlertAction(title: "İptal", style: .cancel)
+            let okAction = UIAlertAction(title: "Tamam", style: .default) { [weak self] _ in
+                guard let text = controller.textFields?.first?.text,
+                      let value = Int(text) else { return }
+                self?.tipSubject.send(.custom(value: value))
+            }
+            [okAction, cancelAction].forEach(controller.addAction(_:))
+            return controller
+        }()
+        parentViewController?.present(alertController, animated: true)
     }
     
     private func buildTipButton(tip: Tip) -> UIButton {
