@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import CombineCocoa
 
 class BillInputView: UIView {
     
@@ -20,6 +22,12 @@ class BillInputView: UIView {
         view.backgroundColor = .white
         view.addCornerRadius(radius: 8.0)
         return view
+    }()
+    
+    private let currencyDenominationLabel: UILabel = {
+        let label = LabelFactory.build(text: "₺", font: ThemeFont.bold(ofSize: 24))
+        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        return label
     }()
     
     private lazy var textField: UITextField = {
@@ -49,19 +57,28 @@ class BillInputView: UIView {
         return textField
     }()
     
-    private let currencyDenominationLabel: UILabel = {
-        let label = LabelFactory.build(text: "₺", font: ThemeFont.bold(ofSize: 24))
-        label.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-        return label
-    }()
+    private let billSubject: PassthroughSubject<Double, Never> = .init()
+    var valuePublisher: AnyPublisher<Double, Never> {  // every input view will have a value
+        return billSubject.eraseToAnyPublisher()
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
     
     init() {
         super.init(frame: .zero)  // Otomatik düzeni kaldırmak için zero kullandık
         layout()
+        observe()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func observe() {
+        textField.textPublisher.sink { [unowned self] text in
+            billSubject.send(text?.doubleValue ?? 0)
+//            print("Text : \(text)")
+        }.store(in: &cancellables)
     }
     
     private func layout() {
@@ -83,13 +100,13 @@ class BillInputView: UIView {
         
         currencyDenominationLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.trailing.equalTo(textFieldContainerView.snp.trailing).offset(-16)
+            make.leading.equalTo(textFieldContainerView.snp.leading).offset(16)
         }
         
         textField.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview()
-            make.trailing.equalTo(currencyDenominationLabel.snp.trailing).offset(16)
-            make.leading.equalTo(textFieldContainerView.snp.trailing).offset(-16)
+            make.leading.equalTo(currencyDenominationLabel.snp.trailing).offset(16)
+            make.trailing.equalTo(textFieldContainerView.snp.trailing).offset(-16)
         }
         
     }
