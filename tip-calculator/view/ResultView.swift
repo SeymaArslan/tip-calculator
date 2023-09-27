@@ -77,7 +77,6 @@ class ResultView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     func configure(result: Result) {
         let text = NSMutableAttributedString(string: result.amountPerPerson.currencyFormatted, attributes: [.font: ThemeFont.bold(ofSize: 48)])
         text.addAttributes([.font: ThemeFont.bold(ofSize: 24)], range: NSMakeRange(0, 1))
@@ -95,11 +94,9 @@ class ResultView: UIView {
             make.trailing.equalTo(snp.trailing).offset(-24)
             make.bottom.equalTo(snp.bottom).offset(-24)
         }
-        
         horizontalLineView.snp.makeConstraints { make in
             make.height.equalTo(2)
         }
-        
         addShadow(offset: CGSize(width: 0, height: 3), color: .black, radius: 12.0, opacity: 0.1)
     }
     
