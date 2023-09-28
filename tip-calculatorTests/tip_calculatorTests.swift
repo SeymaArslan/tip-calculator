@@ -16,7 +16,7 @@ final class tip_calculatorTests: XCTestCase {
     private var sut: CalculatorVM! // sut, sistem ve test anlamına gelir. Peki temel olarak test ettiğimiz nesne nedir? Bu uygulama MVVM mimarisinde oluşturuldu ve bu nedenle tüm iş beyin dediğimiz VM'in içerisinde gerçekleşti VM içindeki mantık ve bu nedenle öncelikle hesap makinesi için Test edeceğiz
     private var cancellables: Set<AnyCancellable>!
     
-    private let logoViewTapSubject = PassthroughSubject<Void, Never>()
+    private var logoViewTapSubject: PassthroughSubject<Void, Never>!
     
     private var audioPlayerService: MockAudioPlayerService!
     
@@ -24,7 +24,7 @@ final class tip_calculatorTests: XCTestCase {
 //        sut = .init() // init audioPlayerService içeriyor. Bu oluşturduğumuz protocol ve hiçbir şey aktarmamıza gerek yok çünkü şu an ses oynatıcısını test etmiyoruz
         audioPlayerService = .init()
         sut = .init(audioPlayerService: audioPlayerService)
-        
+        logoViewTapSubject = .init()
         cancellables = .init()
         super.setUp()
     }
@@ -32,6 +32,8 @@ final class tip_calculatorTests: XCTestCase {
     override func tearDown() {  // yine class olan değil.. Test sona erdiğinde veya tamamlandığında, sut u resetleyen tearDown metodunu çağırır.
         sut = nil // nil yaptık böylelikle her test CalculatorVM sinin yenilenen yeni bir isteğini(örnek) alacağız
         cancellables = nil
+        audioPlayerService = nil
+        logoViewTapSubject = nil
         super.tearDown()
     }
     
