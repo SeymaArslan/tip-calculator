@@ -6,31 +6,51 @@
 //
 
 import XCTest
+import Combine
 @testable import tip_calculator
 
 final class tip_calculatorTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    //MARK: - sut -> System Under Test
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    private var sut: CalculatorVM! // sut, sistem ve test anlamına gelir. Peki temel olarak test ettiğimiz nesne nedir? Bu uygulama MVVM mimarisinde oluşturuldu ve bu nedenle tüm iş beyin dediğimiz VM'in içerisinde gerçekleşti VM içindeki mantık ve bu nedenle öncelikle hesap makinesi için Test edeceğiz
+    private var cancellables: Set<AnyCancellable>!
+    
+    private let logoViewTapSubject = PassthroughSubject<Void, Never>()
+    
+    override func setUp() {  // class olan değil bu setup.. Bir test her çağrıldığında setUp metodu çağırılır ve sut un bir örneğini oluşturur
+        sut = .init() // init audioPlayerService içeriyor. Bu oluşturduğumuz protocol ve hiçbir şey aktarmamıza gerek yok çünkü şu an ses oynatıcısını test etmiyoruz
+        cancellables = .init()
+        super.setUp()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    override func tearDown() {  // yine class olan değil.. Test sona erdiğinde veya tamamlandığında, sut u resetleyen tearDown metodunu çağırır.
+        sut = nil // nil yaptık böylelikle her test CalculatorVM sinin yenilenen yeni bir isteğini(örnek) alacağız
+        cancellables = nil
+        super.tearDown()
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testResultWithoutTipFor1Person() {
+        let bill: Double = 100.0 // GIVEN
+        let tip: Tip = .none  // GIVEN
+        let split: Int = 1 // GIVEN
+        let input = buildInput(bill: bill, tip: tip, split: split)
+        
+        let output = sut.transform(input: input) // WHEN
+        
+        output.updateViewPublisher.sink { result in  // THEN -> çıktının doğru olduğunu test etmek istediğimiz alan
+            XCTAssertEqual(result.amountPerPerson, 100)
+            XCTAssertEqual(result.totalBill, 100)
+            XCTAssertEqual(result.totalTip, 0)
+        }.store(in: &cancellables)
     }
-
+    
+    private func buildInput(bill: Double, tip: Tip, split: Int) -> CalculatorVM.Input {
+        return .init(
+            billPublisher: Just(bill).eraseToAnyPublisher(),
+            tipPublisher: Just(tip).eraseToAnyPublisher(),
+            splitPublisher: Just(split).eraseToAnyPublisher(),
+            logoViewTapPublisher: logoViewTapSubject.eraseToAnyPublisher())
+    }
+    
 }
