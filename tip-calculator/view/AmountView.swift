@@ -11,6 +11,7 @@ class AmountView: UIView {
     
     private let title: String
     private let textAlignment: NSTextAlignment
+    private let amountLabelIdentifier: String
     
     private lazy var titleLabel: UILabel = {  // aşağıda text in değerini title yaptığımızda (String veri yerine) private let'ken hata aldık bu yüzden lazy var yaptık
         LabelFactory.build(text: title, font: ThemeFont.regular(ofSize: 18), textColor: ThemeColor.text, textAlignment: textAlignment)
@@ -23,6 +24,7 @@ class AmountView: UIView {
         let text = NSMutableAttributedString(string: "₺0", attributes: [.font: ThemeFont.bold(ofSize: 24)])
         text.addAttributes([.font: ThemeFont.bold(ofSize: 16)], range: NSMakeRange(0, 1))
         label.attributedText = text
+        label.accessibilityIdentifier = amountLabelIdentifier
         return label
     }()
     
@@ -35,9 +37,10 @@ class AmountView: UIView {
         return stackView
     }()
     
-    init(title: String, textAlignment: NSTextAlignment) {
+    init(title: String, textAlignment: NSTextAlignment, amountLabelIdentifier: String) {
         self.title = title
         self.textAlignment = textAlignment
+        self.amountLabelIdentifier = amountLabelIdentifier
         super.init(frame: .zero)
         layout()
     }
