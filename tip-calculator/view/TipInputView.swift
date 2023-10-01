@@ -129,6 +129,7 @@ class TipInputView: UIView {
                 textField.placeholder = "Cömert olabiliriz"
                 textField.keyboardType = .numberPad
                 textField.autocorrectionType = .no // otomatik düzeltme kapalı
+                textField.accessibilityIdentifier = ScreenIdentifier.TipInputView.customTipAlertTextField.rawValue
             }
             let cancelAction = UIAlertAction(title: "İptal", style: .cancel)
             let okAction = UIAlertAction(title: "Tamam", style: .default) { [weak self] _ in

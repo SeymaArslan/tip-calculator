@@ -85,15 +85,16 @@ class CalculatorScreen {
             XCTAssertTrue(customTipAlertTextField.waitForExistence(timeout: 1.0))
             customTipAlertTextField.typeText("\(value)\n")
         }
-        func selectIncrementButton(numberOfTaps: Int) {
-            incerementButton.tap(withNumberOfTaps: numberOfTaps, numberOfTouches: 1)
-        }
-        func selectDecrementButton(numberOfTaps: Int) {
-            decrementButton.tap(withNumberOfTaps: numberOfTaps, numberOfTouches: 1)
-        }
-        func doubleTapLogoView() {
-            logoView.tap(withNumberOfTaps: 2, numberOfTouches: 1)
-        }
+    }
+    
+    func selectIncrementButton(numberOfTaps: Int) {
+        incerementButton.tap(withNumberOfTaps: numberOfTaps, numberOfTouches: 1)
+    }
+    func selectDecrementButton(numberOfTaps: Int) {
+        decrementButton.tap(withNumberOfTaps: numberOfTaps, numberOfTouches: 1)
+    }
+    func doubleTapLogoView() {
+        logoView.tap(withNumberOfTaps: 2, numberOfTouches: 1)
     }
     
     enum Tip {
