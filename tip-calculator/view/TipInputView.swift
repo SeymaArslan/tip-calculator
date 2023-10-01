@@ -19,6 +19,7 @@ class TipInputView: UIView {
     
     private lazy var tenPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .tenPercent)
+        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.tenPercentButton.rawValue  // test için add all identifiers.. bileşenin 10% button ı etkilenecek
         button.tapPublisher.flatMap({
             Just(Tip.tenPercent)
         }).assign(to: \.value, on: tipSubject)
@@ -28,6 +29,7 @@ class TipInputView: UIView {
     
     private lazy var fifteenPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .fiftenPercent)
+        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.fifteenPercentButton.rawValue  // test için add all identifiers.. bileşenin 15% button ı etkilenecek
         button.tapPublisher.flatMap ({
             Just(Tip.fiftenPercent)
         }).assign(to: \.value, on: tipSubject)
@@ -37,6 +39,7 @@ class TipInputView: UIView {
     
     private lazy var twentyPercentTipButton: UIButton = { // referans vereceğimiz zaman lazy var ile oluşturuyoruz
         let button = buildTipButton(tip: .twentyPercent)
+        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.twentyPercentButton.rawValue  // test için add all identifiers.. bileşenin 20% button ı etkilenecek
         button.tapPublisher.flatMap({
             Just(Tip.twentyPercent)
         }).assign(to: \.value, on: tipSubject)
@@ -46,6 +49,7 @@ class TipInputView: UIView {
     
     private lazy var customTipButton: UIButton = {
         let button = UIButton()
+        button.accessibilityIdentifier = ScreenIdentifier.TipInputView.customTipButton.rawValue  // test için add all identifiers.. bileşenin custom button ı etkilenecek
         button.setTitle("Özel miktar", for: .normal)
         button.titleLabel?.font = ThemeFont.bold(ofSize: 20)
         button.backgroundColor = ThemeColor.primary

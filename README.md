@@ -11,3 +11,6 @@ Temel olarak bir ekran görüntüsü veya bir jpeg dosyası alır ve bu jpeg dos
 Testte aynı simulatörü kullanmak önemli yoksa başarısız bir test elde ederiz.
 
 UI Test ler snapshot veya unit testlerinden farklı olarak öncelikle kullanıcı arayüzünü test eder. Ekran öğelerinin iş mantığıyla nasıl etkileşime girdiğini test eder. 
+
+
+cmd + shift + o ile hızlı arama 

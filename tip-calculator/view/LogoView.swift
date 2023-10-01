@@ -56,6 +56,7 @@ class LogoView: UIView {
 
     init() {
         super.init(frame: .zero)  // Otomatik düzeni kaldırmak için zero kullandık
+        accessibilityIdentifier = ScreenIdentifier.LogoView.logoView.rawValue  // test için add all identifiers.. logo görünümünün tamamına dokunuluğunda olay gerçekleşecek bu yüzden logo view da init içinde inject yapıyoruz, böylelikle bileşenin tamamı etkilenecek
         layout()
     }
     

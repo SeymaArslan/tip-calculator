@@ -19,6 +19,7 @@ class SplitInputView: UIView {
     
     private lazy var decrementButton: UIButton = {
         let button = buildButton(text: "-", corners: [.layerMinXMaxYCorner, .layerMinXMinYCorner])
+        button.accessibilityIdentifier = ScreenIdentifier.SplitInputView.decrementButton.rawValue  // test için add all identifiers.. bileşenin - butonu etkilenecek
         button.tapPublisher.flatMap { [unowned self] _ in
             Just(splitSubject.value == 1 ? 1 : splitSubject.value - 1)
         }.assign(to: \.value, on: splitSubject)
@@ -28,6 +29,7 @@ class SplitInputView: UIView {
     
     private lazy var incrementButton: UIButton = {
         let button = buildButton(text: "+", corners: [.layerMaxXMinYCorner, .layerMaxXMaxYCorner])  // button eğrileri için
+        button.accessibilityIdentifier = ScreenIdentifier.SplitInputView.incrementButton.rawValue  // test için add all identifiers.. bileşenin + butonu etkilenecek
         button.tapPublisher.flatMap { [unowned self] _ in
             Just(splitSubject.value + 1)
         }.assign(to: \.value, on: splitSubject)
@@ -37,6 +39,7 @@ class SplitInputView: UIView {
     
     private lazy var quantityLabel: UILabel = {
         let label = LabelFactory.build(text: "1", font: ThemeFont.bold(ofSize: 20), backgroundColor: .white)
+        label.accessibilityIdentifier = ScreenIdentifier.SplitInputView.quantityValueLabel.rawValue // test için add all identifiers.. bileşenin label ı etkilenecek
         return label
     }()
     
